@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background: url('{{ url_for("static", filename="images/login.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+    }
+    
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding: 0 10%;
+        background: rgba(0, 0, 0, 0.5);
+        flex-direction: row; /* Adjusting for larger screens */
+    }
+    
+    .welcome-text {
+        color: white;
+        max-width: 500px;
+    }
+    
+    .welcome-text h1 {
+        font-size: 4em;
+        margin: 0;
+    }
+    
+    .welcome-text p {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+    
+    .social-media-icons {
+        margin-top: 20px;
+    }
+    
+    .social-media-icons a {
+        font-size: 2em;
+        margin-right: 10px;
+        text-decoration: none;
+    }
+    
+    .social-media-icons a:hover {
+        opacity: 0.7;
+    }
+    
+    .sign-in-form {
+        background: rgba(204, 158, 158, 0.9);
+        padding: 2em;
+        border-radius: 8px;
+        max-width: 300px;
+        width: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sign-in-form h2 {
+        text-align: center;
+        margin-bottom: 1em;
+        color: black;
+    }
+    
+    .sign-in-form label {
+        display: block;
+        margin-bottom: 0.5em;
+        font-weight: bold;
+    }
+    
+    .sign-in-form input[type="email"], .sign-in-form input[type="password"] {
+        width: 100%;
+        padding: 0.8em;
+        margin-bottom: 1em;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .sign-in-form button {
+        width: 100%;
+        padding: 0.8em;
+        background-color: #f4511e;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    
+    .sign-in-form button:hover {
+        background-color: #0ddf5a;
+    }
+    
+    .sign-in-form a {
+        display: block;
+        text-align: center;
+        margin-top: 1em;
+        color: #333;
+        text-decoration: none;
+    }
+    
+    .sign-in-form p {
+        font-size: 0.8em;
+        text-align: center;
+        margin-top: 2em;
+        color: black;
+    }
+    
+    /* Responsive adjustments for tablets and smaller screens */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column; /* Stack the elements on smaller screens */
+            padding: 0 5%;
+            text-align: center;
+        }
+    
+        .welcome-text h1 {
+            font-size: 3em; /* Adjust heading size for smaller screens */
+        }
+    
+        .welcome-text p {
+            font-size: 1em;
+        }
+    
+        .sign-in-form {
+            max-width: 90%; /* Make the form fill most of the screen width */
+        }
+    }
+    
+    /* Responsive adjustments for phones */
+    @media (max-width: 480px) {
+        .welcome-text h1 {
+            font-size: 2em; /* Smaller heading for phones */
+        }
+    
+        .welcome-text p {
+            font-size: 0.9em;
+        }
+    
+        .container {
+            padding: 0 2%;
+        }
+    
+        .sign-in-form {
+            padding: 1.5em;
+        }
+    
+        .sign-in-form h2 {
+            font-size: 1.5em;
+        }
+    
+        .sign-in-form input[type="email"], .sign-in-form input[type="password"] {
+            padding: 0.6em;
+        }
+    
+        .sign-in-form button {
+            padding: 0.6em;
+            font-size: 0.9em;
+        }
+    
+        .social-media-icons a {
+            font-size: 1.5em; /* Smaller icons for phones */
+        }
+    }
+</style> 
+
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="active">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('contact') }}" class="center">Contact</a>
+        <a href="{{ url_for('login') }}" class="right">Login</a>
+        <a href="{{ url_for('cart') }}" class="right">
+            <i class="fas fa-shopping-cart"></i> Cart
+        </a>
+        <form class="search-form" action="{{ url_for('search') }}" method="get">
+            <input type="text" name="query" placeholder="Search..." />
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    
+
+    <div class="container">
+        <div class="welcome-text">
+            <h1>Welcome Back</h1>
+            <p>“Welcome back! We’re delighted to see you again. Dive into our exquisite collection 
+                of premium rice varieties, carefully selected to bring the best flavors to your table.
+                 Whether you’re looking for aromatic jasmine, nutritious brown rice, or any other specialty,
+                  we’re here to provide you with the finest quality. Enjoy your shopping experience!”
+            </p>
+            <div class="social-media-icons">
+                <a href="https://www.facebook.com/seavminh.lee?mibextid=LQQJ4d"><i class="fab fa-facebook-f" style="color: #3b5998;"></i></a>
+                <a href="https://t.me/Artwaii2005"><i class="fab fa-telegram" style="color: #0088cc;"></i></a>
+                <a href="https://www.instagram.com/_t.hengg?igsh=aGpjOWtrdXJ0bHpx&utm_source=qr"><i class="fab fa-instagram" style="color: #e4405f;"></i></a>
+            </div>
+        </div>
+        <div class="sign-in-form">
+            <h2>Sign in</h2>
+            <form action="{{ url_for('do_admin_login') }}" method="POST">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <label>
+                    <input type="checkbox" name="remember"> Remember Me
+                </label>
+                <button type="submit">Sign in now</button>
+                <a href="#">Lost your password?</a>
+            </form>
+            <p>By clicking on "Sign in now" you agree to <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

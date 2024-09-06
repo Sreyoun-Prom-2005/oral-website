@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Khmer Rice: Cambodian Rice - A Taste of Tradition. Sustainably grown, locally nurtured.">
+    <meta name="keywords" content="Khmer Rice, Cambodian Rice, Sustainable Farming, Local Produce">
+    <meta name="author" content="Arkpei Prom">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Khmer Rice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo1.jpg') }}">
+
+    <style>
+
+        /* Reset some default styles */
+        body, h1, p, div, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Basic styles for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Header styles */
+        .header3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header3 h1 {
+            margin-bottom: 10px;
+        }
+
+        .header3 p {
+            margin-bottom: 20px;
+        }
+
+        /* Cart items styles */
+        .cart-items {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+        }
+
+        .cart-total {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        /* Checkout button styles */
+        #checkout {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        #checkout:hover {
+            background-color: #45a049;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="active">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('contact') }}" class="center">Contact</a>
+        <a href="{{ url_for('login') }}" class="right">Login</a>
+        <a href="{{ url_for('cart') }}" class="right">
+            <i class="fas fa-shopping-cart"></i> Cart
+        </a>
+        <form class="search-form" action="{{ url_for('search') }}" method="get">
+            <input type="text" name="query" placeholder="Search..." />
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    
+    
+    <div class="header3">
+        <h1>Shopping Cart</h1>
+        <p>Your selected items will appear here.</p>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be dynamically added here using JavaScript -->
+        </div>
+        <div class="cart-total" id="cart-total">
+            <!-- Total price will be dynamically added here using JavaScript -->
+        </div>
+        <button id="checkout" onclick="goToCheckout()">Checkout</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.querySelector('.cart-items');
+    
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                return;
+            }
+    
+            cart.forEach(item => {
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <p>Product: ${item.type}</p>
+                    <p>Price: $${item.price}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                `;
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+    
+            const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+            const cartTotalElement = document.createElement('div');
+            cartTotalElement.className = 'cart-total';
+            cartTotalElement.innerHTML = `Total Price: $${totalPrice.toFixed(2)}`;
+            cartItemsContainer.appendChild(cartTotalElement);
+        });
+    
+        function checkout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+    
+            const customerName = prompt('Enter your name:');
+            const customerEmail = prompt('Enter your email:');
+    
+            const orderData = {
+                customer_name: customerName,
+                customer_email: customerEmail,
+                cart: cart
+            };
+    
+            fetch('/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                localStorage.removeItem('cart');  // Clear cart after successful checkout
+                window.location.href = "{{ url_for('index') }}";
+            });
+        }
+    </script>
+    
+</body>
+</html>

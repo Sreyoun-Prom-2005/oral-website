@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <ul>
+        <li>Total Users: {{ user_count }}</li>
+        <li>Total Categories: {{ category_count }}</li>
+        <li>Total Products: {{ product_count }}</li>
+        <li>Total Orders: {{ order_count }}</li>
+    </ul>
+    <nav>
+        <a href="{{ url_for('admin_customers') }}">Customers</a>
+        <a href="{{ url_for('admin_categories') }}">Categories</a>
+        <a href="{{ url_for('admin_products') }}">Products</a>
+        <a href="{{ url_for('admin_orders') }}">Orders</a>
+    </nav>
+</body>
+</html>

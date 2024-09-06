@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url('reset_token_background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .reset-token-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2em;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-token-form h2 {
+            text-align: center;
+            margin-bottom: 1em;
+            color: black;
+        }
+
+        .reset-token-form label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        .reset-token-form input[type="password"] {
+            width: 100%;
+            padding: 0.8em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .reset-token-form button {
+            width: 100%;
+            padding: 0.8em;
+            background-color: #f4511e;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .reset-token-form button:hover {
+            background-color: #0ddf5a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reset-token-form">
+            <h2>Reset Password</h2>
+            <form method="post" action="/reset_token/{{ token }}">
+                <label for="password">New Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Reset Password</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
